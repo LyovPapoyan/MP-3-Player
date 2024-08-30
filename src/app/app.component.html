@@ -1,0 +1,50 @@
+<div class="container">
+  <h1 class="title">Список звукозаписей</h1>
+
+  <div class="table-wrapper">
+    <table
+      class="table"
+      mat-table
+      [dataSource]="sounds"
+      class="mat-elevation-z8 demo-table"
+    >
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let sound">{{ sound.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Имя Звука</th>
+        <td mat-cell *matCellDef="let sound">{{ sound.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="filename">
+        <th mat-header-cell *matHeaderCellDef>Имя файла</th>
+        <td mat-cell *matCellDef="let sound">
+          {{ sound.fileName }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        class="tbody-row"
+        (click)="playSound(row)"
+        [ngClass]="{ highlight: selectedRow == row.id }"
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+
+    <div *ngIf="selectedSound" class="player-wrapper">
+      <audio controls [src]="selectedSound" class="player"></audio>
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="deletePlayer()"
+        class="delete-button"
+      >
+        Удалить плеер
+      </button>
+    </div>
+  </div>
+</div>
